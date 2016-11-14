@@ -66,6 +66,14 @@ public class SampleMediaListFragment extends Fragment {
                 VideoActivity.intentTo(activity, url, name);
             }
         });
+        mAdapter.addItem("http://devimages.apple.com.edgekey.net/streaming/examples/bipbop_16x9/gear5/prog_index.m3u8", "1080P");
+        mAdapter.addItem("http://live.hkstv.hk.lxdns.com/live/hks/playlist.m3u8", "720P");
+        mAdapter.addItem("rtsp://218.204.223.237:554/live/1/67A7572844E51A64/f68g2mj7wjua3la7.sdp", "rtsp 海关");
+        mAdapter.addItem("rtsp://119.164.59.39:1554/iptv/Tvod/iptv/001/001/ch15050914035980594154.rsc/27191_Uni.sdp", "rtsp IPTV-CCTV");
+        mAdapter.addItem("rtmp://rtmpplay3.idol001.com/live/korea_sbs", "korea_sbs");
+        mAdapter.addItem("rtsp://admin:qx12345678@221.182.63.227:23554/Streaming/Channels/101?transportmode=unicast", "rtsp-1080p 渠南新村");
+        mAdapter.addItem("rtsp://117.139.57.40:556/HongTranSvr?DevId=4085e760-cf31-489a-b883-b8c330ebc30c&Session=4085e760-cf31-489a-b883-b8c330ebc30c&Url=\"rtsp://admin:a12345678@10.2.0.52:554/cam/realmonitor?channel=1&subtype=1\"", "rtsp-1080p   双桥水库");
+        mAdapter.addItem("rtsp://admin:abc12345@192.168.5.12:554/cam/realmonitor?channel=1&subtype=1", "rtsp-1080p other");
 
         mAdapter.addItem("http://devimages.apple.com.edgekey.net/streaming/examples/bipbop_4x3/bipbop_4x3_variant.m3u8", "bipbop basic master playlist");
         mAdapter.addItem("http://devimages.apple.com.edgekey.net/streaming/examples/bipbop_4x3/gear1/prog_index.m3u8", "bipbop basic 400x300 @ 232 kbps");
