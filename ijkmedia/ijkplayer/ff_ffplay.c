@@ -300,7 +300,9 @@ static int packet_queue_get(PacketQueue *q, AVPacket *pkt, int block, int *seria
                 q->last_pkt = NULL;
             q->nb_packets--;
             q->size -= pkt1->pkt.size + sizeof(*pkt1);
+            if (pkt1->pkt.duration > 0){
             q->duration -= pkt1->pkt.duration;
+			}
             *pkt = pkt1->pkt;
             if (serial)
                 *serial = pkt1->serial;
@@ -2482,6 +2484,10 @@ static int read_thread(void *arg)
     opts = setup_find_stream_info_opts(ic, ffp->codec_opts);
     orig_nb_streams = ic->nb_streams;
 
+	if(strstr(ic->filename, "rtsp")){
+ 		ic->probesize = 128*1024;
+		av_log(NULL, AV_LOG_INFO, "[gongjia %s: %d] rtsp ic->probesize = %d ......\n", __FUNCTION__, __LINE__, ic->probesize);
+ 	}
     err = avformat_find_stream_info(ic, opts);
 
     for (i = 0; i < orig_nb_streams; i++)
@@ -2673,8 +2679,9 @@ static int read_thread(void *arg)
                  (ic->pb && !strncmp(ffp->input_filename, "mmsh:", 5)))) {
             /* wait 10 ms to avoid trying to get another packet */
             /* XXX: horrible */
-            SDL_Delay(10);
-            continue;
+			//gongjia mask
+            //SDL_Delay(10);
+            //continue;
         }
 #endif
         if (is->seek_req) {
@@ -3891,8 +3898,9 @@ void ffp_check_buffering_l(FFPlayer *ffp)
         buf_percent = buf_size_percent;
     }
 
-    if (buf_time_percent >= 0 && buf_size_percent >= 0) {
-        buf_percent = FFMIN(buf_time_percent, buf_size_percent);
+    if (buf_time_percent >= 0 || buf_size_percent >= 0) {  //gongjia
+        buf_percent = FFMAX(buf_time_percent, buf_size_percent);
+		av_log(NULL, AV_LOG_ERROR, "[gdebug %s, %d]. buf_percent=%d\n",__FUNCTION__, __LINE__, buf_percent);
     }
     if (buf_percent) {
 #ifdef FFP_SHOW_BUF_POS
