@@ -380,6 +380,10 @@ typedef struct VideoState {
 
     volatile int latest_seek_load_serial;
     volatile int64_t latest_seek_load_start_at;
+	// Add by ljsdaya
+    // for low delay time with live play(realtime), control videoq/audioq duration < max_cached_duration
+    // realtime set to 0, max_cached_duration = 0 means is playback
+    int max_cached_duration;
 } VideoState;
 
 /* options specified by the user */
